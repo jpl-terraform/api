@@ -9,7 +9,7 @@ const message = require('./utils/message');
 message().catch((err) => {
   console.log("Error occurred: ", err);
 });
-
+process.env.SOCKET_PORT  = process.env.SOCKET_PORT || 4200;
 const app = express();
 app.use(cors());
 
