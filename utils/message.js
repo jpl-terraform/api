@@ -1,11 +1,11 @@
 const { ServiceBusClient, ReceiveMode, delay} = require("@azure/service-bus");
 const BatteryController = require('../controllers').BatteryController;
 const socketIo = require('./socket');
-const io = socketIo();
+let io;
 
-async function message() {
+async function message(server) {
   const connection_string = process.env.NAMESPACE_CONNECTION_STRING;
-
+  io = socketIo(server);
   while(true) {
     const sbClient = ServiceBusClient.createFromConnectionString(connection_string);
     try {
@@ -26,7 +26,6 @@ async function receiveMessages(sbClient) {
     if(battery) {
       io.emit('add_battery', battery.dataValues);
     }
-    console.log(battery);
     await brokeredMessage.complete();
   };
   const onErrorHandler = (err) => {

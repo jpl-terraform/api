@@ -4,9 +4,9 @@ class SocketIo {
 
   constructor() {}
 
-  static io() {
+  static io(server) {
     if(!SocketIo.socket) {
-      SocketIo.socket = socketIo(process.env.SOCKET_PORT);
+      SocketIo.socket = socketIo(server);
     }
     return SocketIo.socket;
   }
